@@ -44,9 +44,11 @@
 6. [Loopar](#16-loopar-while-och-for)
 7. [Switch](#17-switch-satsen)
 8. [Funktioner](#18-funktioner)
-9. [Arrow functions](#19-arrow-functions-pil-funktioner)
-10. [Objekt](#110-objekt)
-11. [Arrays](#111-listor-arrays)
+9. [Objekt](#19-objekt)
+10. [Arrays](#110-listor-arrays)
+11. [Arrow functions](#111-arrow-functions-pil-funktioner)
+12. [Array filter med arrow functions](#112-array-filter-med-arrow-functions)
+13. [Asynkron JavaScript](#113-asynkron-javascript-promises)
 
 ---
 
@@ -136,7 +138,7 @@ let x = 1 + (a *= 2);
 **Fråga:** Vad blir resultatet av detta uttryck? Gissa först!
 
 ```javascript
-"" + 1 + 0
+"" + 1 + 0;
 ```
 
 **Kontroll:** Bekräfta med `console.log()`.
@@ -392,25 +394,7 @@ pow(5, 1) == 5; // 5
 
 **Tips:** Använd en loop för att multiplicera `x` med sig själv `n` gånger.
 
-## 1.9 Arrow functions (pil-funktioner)
-
-### Övningsuppgifter
-
-### **Övning 1.9.1 - Max-funktion med arrow function**
-
-Skriv en arrow function `max(a, b)` som returnerar det största av två siffror `a` och `b`.
-
-**Exempel:**
-
-```javascript
-max(2, 5) == 5;
-max(3, -1) == 3;
-max(1, 1) == 1;
-```
-
-**Tips:** Använd syntaxen `const max = (a, b) => { ... }`
-
-## 1.10 Objekt
+## 1.9 Objekt
 
 ### Övningsuppgifter
 
@@ -487,7 +471,7 @@ Observera att `multiplyNumeric` inte behöver returnera någonting. Det bör än
 
 P.S. Använd `typeof()` för att kontrollera ifall det är ett nummer.
 
-## 1.11 Listor (Arrays)
+## 1.10 Listor (Arrays)
 
 ### Övningsuppgifter
 
@@ -497,7 +481,7 @@ P.S. Använd `typeof()` för att kontrollera ifall det är ett nummer.
 2. Använd en for-loop och loopa igenom alla gruppmedlemmar i arrayen/listan.
 3. För varje medlem skriv ut namnet med `console.log()`.
 
-### **Övning 1.11.2 - Array-referenser**
+### **Övning 1.10.2 - Array-referenser**
 
 **Fråga:** Vad kommer denna kod att visa? Gissa först!
 
@@ -532,4 +516,124 @@ Jazz, Blues, Rock-n-Roll
 Jazz, Classics, Rock-n-Roll
 Classics, Rock-n-Roll
 Rap, Reggae, Classics, Rock-n-Roll
+```
+
+## 1.11 Arrow functions (pil-funktioner)
+
+### Övningsuppgifter
+
+### **Övning 1.11.1 - Max-funktion med arrow function**
+
+Skriv en arrow function `max(a, b)` som returnerar det största av två siffror `a` och `b`.
+
+**Exempel:**
+
+```javascript
+max(2, 5) == 5;
+max(3, -1) == 3;
+max(1, 1) == 1;
+```
+
+**Tips:** Använd syntaxen `const max = (a, b) => { ... }`
+
+## 1.12 Array filter med arrow functions
+
+### Övningsuppgifter
+
+### **Övning 1.12.1 - Filtrera användare efter ålder**
+
+Skapa en array med användarobjekt och använd `filter()` metoden med en arrow function för att hitta alla användare som är över 17 år.
+
+**Exempel:**
+
+```javascript
+const users = [
+  { name: "Anna", age: 25 },
+  { name: "Karl", age: 16 },
+  { name: "Sara", age: 18 },
+  { name: "Erik", age: 15 },
+];
+const adults = users.filter(/* arrow function här */);
+console.log(adults);
+```
+
+## 1.13 Asynkron JavaScript (Promises)
+
+### Övningsuppgifter
+
+### **Övning 1.13.1 - Skapa ett Promise**
+
+Skapa en funktion `waitForSeconds(seconds)` som returnerar ett promise som resolvar efter det angivna antalet sekunder.
+
+**Exempel:**
+
+```javascript
+function waitForSeconds(seconds) {
+  // Returnera ett promise här
+}
+
+waitForSeconds(2).then(() => {
+  console.log("2 sekunder har gått!");
+});
+```
+
+**Tips:** Använd `setTimeout()` tillsammans med `new Promise()`.
+
+### **Övning 1.13.2 - Använd Promises med .then()**
+
+Skapa en funktion `getRandomNumber()` som returnerar ett promise. Promise ska resolva med ett slumpmässigt tal mellan 1-100 efter 1 sekund.
+
+Använd `.then()` för att:
+
+1. Ta emot talet
+2. Skriva ut det till konsolen
+3. Testa om talet är större än 50
+
+**Exempel:**
+
+```javascript
+getRandomNumber().then((number) => {
+  console.log("Slumpmässigt tal:", number);
+  if (number > 50) {
+    console.log("Talet är större än 50!");
+  } else {
+    console.log("Talet är mindre än eller lika med 50!");
+  }
+});
+```
+
+### **Övning 1.13.3 - Använd Promises med async/await**
+
+Skapa en funktion `fetchUserData(userId)` som returnerar ett promise. Promise ska resolva med ett användarobjekt efter 1 sekund.
+
+Skapa sedan en `async` funktion `displayUserInfo(userId)` som använder `await` för att:
+
+1. Hämta användardata
+2. Skriva ut användarens namn och ålder
+3. Hantera fel med try/catch
+
+**Exempel:**
+
+```javascript
+function fetchUserData(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id: userId,
+        name: "Anna Andersson",
+        age: 25,
+      });
+    }, 1000);
+  });
+}
+
+async function displayUserInfo(userId) {
+  try {
+    // Använd await här
+  } catch (error) {
+    console.log("Något gick fel:", error);
+  }
+}
+
+displayUserInfo(1);
 ```
