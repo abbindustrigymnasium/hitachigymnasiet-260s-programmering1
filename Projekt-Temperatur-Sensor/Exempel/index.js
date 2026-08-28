@@ -19,10 +19,6 @@ const db = firebase.database();
 
 var ledRef = db.ref("led");
 
-var counterRef = db.ref("counter");
-
-var personRef = db.ref("person");
-
 ledRef.once("value").then((snapshot) => {
   if (snapshot.val()) {
     let myCheckBox = document.getElementById("checkbox");

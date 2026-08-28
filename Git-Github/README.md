@@ -113,19 +113,6 @@ Det första Du bör göra är att skapa dig ett konto på GitHub. Här är det v
 Fyll i formuläret som nedan fast med ditt eget användarnamn och e-post.
 ![Github Signup](https://github.com/abbjoafli/Programmering-1/blob/master/Git-Github/Github_SignUp.PNG)
 
-### Skapa ett repositorie
-
-Nu är det dags att skapa ditt första repositorie. Det gör du från din startsida på GitHub när du loggat in.
-
-![Github Signup](https://github.com/abbjoafli/Programmering-1/blob/master/Git-Github/Github_LoggedIn.PNG)
-
-Klicka på knappen "New" och fyll i dina uppgifter. Går du en kurs har du säkert fått information om vad du ska döpa detta repositorie till.
-
-![Github New](https://github.com/abbjoafli/Programmering-1/blob/master/Git-Github/My_Website_Github.PNG)
-
-Du kan här välja om du vill skapa ditt repositorie public (alla kan se din kod) eller private. Bara du och de du delar ditt repositorie med kan se dina filer.
-
----
 
 ## Övning Praktisk Git-användning
 
