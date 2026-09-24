@@ -49,6 +49,7 @@
 11. [Arrow functions](#111-arrow-functions-pil-funktioner)
 12. [Array filter med arrow functions](#112-array-filter-med-arrow-functions)
 13. [Asynkron JavaScript](#113-asynkron-javascript-promises)
+14. [Klasser (OOP)](#114-klasser-oop)
 
 ---
 
@@ -637,3 +638,56 @@ async function displayUserInfo(userId) {
 
 displayUserInfo(1);
 ```
+
+## 1.14 Klasser (OOP)
+
+### Enklare övningar – Glass
+
+Övningarna bygger på varandra, så använd samma fil (`övning1.14.js`) och bygg vidare på koden. Titta på OOP-bilderna med glassexemplet i presentationen om du kör fast.
+
+### **Övning 1.14.1 - Din första klass**
+
+1. Skapa en klass `Glass` med en `constructor(smak, kulor)`
+2. Spara värdena i objektet med `this.smak = smak;` och `this.kulor = kulor;`
+3. Skapa ett objekt: `const glass1 = new Glass("Choklad", 2);`
+4. Skriv ut `glass1.smak` och `glass1.kulor` med `console.log()`
+
+**Tips:** Glöm inte `new` när du skapar ett objekt från en klass.
+
+### **Övning 1.14.2 - Flera objekt**
+
+1. Skapa två objekt till, `glass2` och `glass3`, med andra smaker och antal kulor
+2. Skriv ut alla tre glassarna med `console.log()`
+3. Ändra antal kulor på `glass2` (`glass2.kulor = 4;`) och skriv ut den igen. Ändrades `glass1` också? Varför inte?
+
+### **Övning 1.14.3 - Metoden beskriv()**
+
+1. Lägg till metoden `beskriv()` i klassen som skriver ut t.ex. `Choklad: 2 kulor`
+2. Anropa `beskriv()` på alla tre glassarna: `glass1.beskriv();`
+
+**Tips:** Inuti klassen når du egenskaperna med `this`, t.ex. `this.smak`.
+
+### **Övning 1.14.4 - Metoden pris()**
+
+1. Lägg till metoden `pris()` som returnerar priset. En kula kostar 15 kr.
+2. Skriv ut priset för varje glass
+3. Uppdatera `beskriv()` så att den också visar priset: `Choklad: 2 kulor, 30 kr`
+
+### **Övning 1.14.5 - Metoden laggTillKula()**
+
+1. Lägg till metoden `laggTillKula()` som ökar `this.kulor` med 1
+2. Anropa den två gånger på `glass1` och anropa sedan `beskriv()`. Vad kostar glassen nu?
+
+### **Övning 1.14.6 - Glassar i en array**
+
+1. Lägg dina tre glassar i en array: `const glassar = [glass1, glass2, glass3];`
+2. Loopa igenom arrayen och anropa `beskriv()` på varje glass
+3. Räkna ut vad alla glassar kostar tillsammans och skriv ut summan
+
+### **Övning 1.14.7 - Egen klass**
+
+Skapa en egen klass om något du gillar, t.ex. `Hund`, `Bil` eller `Spel`:
+
+1. Klassen ska ha en `constructor` med minst 2 egenskaper
+2. Klassen ska ha minst 1 metod som skriver ut något
+3. Skapa minst 2 objekt med `new` och anropa metoden på båda

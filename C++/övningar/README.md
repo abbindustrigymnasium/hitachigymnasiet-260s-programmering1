@@ -396,7 +396,64 @@ pow(5, 1) == 5; // 5
 
 ## 1.10 Klasser
 
-### Övningsuppgifter
+### Enklare övningar – Glass
+
+Börja här! Övningarna bygger på varandra, så använd samma kod och bygg vidare på den. Titta på OOP-bilderna med glassexemplet i presentationen om du kör fast.
+
+### **Övning 1.10.1 - Din första klass**
+
+1. Skapa en klass `Glass` med `public:` och två medlemmar: `string smak` och `int kulor`
+2. Skapa ett objekt `glass1` av klassen i `main()`: `Glass glass1;`
+3. Ge objektet värden: `glass1.smak = "Choklad";` och `glass1.kulor = 2;`
+4. Skriv ut smak och antal kulor med `cout`
+
+**Tips:** Glöm inte semikolon efter klassens avslutande `};`
+
+### **Övning 1.10.2 - Flera objekt**
+
+1. Skapa två objekt till, `glass2` och `glass3`, med andra smaker och antal kulor
+2. Skriv ut alla tre glassarna
+3. Ändra antal kulor på `glass2` och skriv ut den igen. Ändrades `glass1` också? Varför inte?
+
+### **Övning 1.10.3 - Konstruktor**
+
+1. Lägg till en konstruktor i klassen:
+
+```cpp
+Glass(string s, int k) {
+    smak = s;
+    kulor = k;
+}
+```
+
+2. Skapa nu glassarna på en rad var: `Glass glass1("Choklad", 2);`
+3. Skriv ut alla glassarna igen
+
+### **Övning 1.10.4 - Metoden beskriv()**
+
+1. Lägg till metoden `void beskriv()` i klassen som skriver ut t.ex. `Choklad: 2 kulor`
+2. Anropa `beskriv()` på alla tre glassarna: `glass1.beskriv();`
+
+### **Övning 1.10.5 - Metoden pris()**
+
+1. Lägg till metoden `int pris()` som returnerar priset. En kula kostar 15 kr.
+2. Skriv ut priset för varje glass
+3. Uppdatera `beskriv()` så att den också visar priset: `Choklad: 2 kulor, 30 kr`
+
+### **Övning 1.10.6 - Metoden laggTillKula()**
+
+1. Lägg till metoden `void laggTillKula()` som ökar `kulor` med 1
+2. Anropa den två gånger på `glass1` och anropa sedan `beskriv()`. Vad kostar glassen nu?
+
+### **Övning 1.10.7 - Egen klass**
+
+Skapa en egen klass om något du gillar, t.ex. `Hund`, `Bil` eller `Spel`:
+
+1. Klassen ska ha minst 2 medlemmar och en konstruktor
+2. Klassen ska ha minst 1 metod som skriver ut något
+3. Skapa minst 2 objekt och anropa metoden på båda
+
+### Fler övningar
 
 **Övning 0. En djur-klass**
 
