@@ -430,6 +430,8 @@ schedule["8:30"] = "get up";
 console.log( isEmpty(schedule) ); // false
 ```
 
+**Tips:** `Object.keys(obj)` ger en array med alla nycklar i objektet. Hur lång är den arrayen om objektet är tomt? Se bilden "Object.keys, values och entries" i presentationen.
+
 **Övning 3.Summera objekt egenskaper**<br>
 Vi har ett objekt som lagrar löner för vårt team:
 
