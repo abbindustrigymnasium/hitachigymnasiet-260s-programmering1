@@ -354,6 +354,7 @@ Knapp andra sidan -----> GND
 - **Användning**: Sätt in komponenter och använd jumpers för att koppla
 - **Fördelar**: Snabb prototypning, enkelt att ändra kopplingar
 - **Tips**: Använd olika färger på jumpers för olika funktioner (röd=+3.3V, svart=GND)
+- **Video**: [Hur fungerar en breadboard?](https://www.youtube.com/watch?v=W6mixXsn-Vc)
 
 ### Resistorer
 **Syfte**: Begränsar ström och delar spänning
@@ -441,7 +442,7 @@ ESP8266 GND -> DS18B20 GND
 
 ### YouTube-tutorials
 - [ESP8266 Tutorial Playlist](https://youtube.com/playlist?list=PLlLe2PpVuiVLj8fOOM4cpEHbVZ1SexbtT&si=GWnsIVnBnKqW_LDv) - Omfattande video-serie om ESP8266
-- [ESP8266 Getting Started Guide](https://www.youtube.com/watch?v=W6mixXsn-Vc) - Grundläggande introduktion
+- [Hur fungerar en breadboard?](https://www.youtube.com/watch?v=W6mixXsn-Vc) - Så kopplar du komponenter på en experimentplatta
 
 ### Praktiska guider
 - [Random Nerd Tutorials - ESP8266](https://randomnerdtutorials.com/category/esp8266/) - Steg-för-steg projekt
