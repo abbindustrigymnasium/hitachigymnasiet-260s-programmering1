@@ -1,13 +1,14 @@
-# Övning 1 – Trafikljus med ESP8266
+# Övning 1 – Blinka en lysdiod med ESP8266
 
-I den här övningen kopplar du ett trafikljus (tre lysdioder: grön, gul och röd) till en ESP8266 och programmerar det så att det växlar färg precis som ett riktigt trafikljus.
+I den här övningen kopplar du en lysdiod (LED) och en resistor på en experimentplatta (breadboard) till en ESP8266 och programmerar lysdioden så att den blinkar.
 
 ## Mål
 
 När du är klar ska du kunna:
 
 - koppla komponenter på en experimentplatta (breadboard)
-- förklara varför lysdioder behöver en resistor i serie
+- förklara varför en lysdiod behöver en resistor i serie
+- veta vilket ben på lysdioden som är plus och vilket som är minus
 - använda `pinMode()`, `digitalWrite()` och `delay()`
 - ladda upp ett program till ESP8266 från Arduino-mjukvaran
 
@@ -15,79 +16,86 @@ När du är klar ska du kunna:
 
 - 1 st ESP8266 (NodeMCU) på expansionskort
 - 1 st USB-kabel (data)
-- 1 st trafikljusmodul märkt **G, Y, R** och **GND**
+- 1 st lysdiod (LED)
+- 1 st resistor (t.ex. 220 Ω)
 - 1 st experimentplatta (breadboard)
-- 3 st resistorer (t.ex. 220 Ω)
-- 4 st kopplingskablar
+- 2 st kopplingskablar
 
 > Har du inte installerat Arduino-mjukvaran och stödet för ESP8266 än? Följ först avsnittet *Installera Arduino-miljön för ESP8266* i [ESP8266-guiden](../README.md).
 
-## Så här ser uppställningen ut
+---
 
-**Bild 1** – Kablarna kopplas till stiften märkta **7**, **6**, **5** och **G** på expansionskortet.
+## Steg 1 – Lär känna komponenterna
 
-![ESP8266 på expansionskort med kablar i stift 7, 6, 5 och G](bild1.png)
+### Stiften på ESP8266
 
-**Bild 2** – Hela uppställningen med experimentplattan, de tre resistorerna och trafikljuset.
+Bredvid ESP8266 finns det många metallstift som sticker upp. Vi ska använda stiften **5** och **G**.
 
-![Hela uppställningen med ESP8266, experimentplatta och trafikljus](bild2.png)
+![ESP8266 på expansionskort. Stiften 5 och G finns i raden med siffror.](bild1.png)
+
+- **5** är det digitala stiftet **D5**. **D** står för *digital*, det vill säga att stiftet antingen har **låg** (`LOW`) eller **hög** (`HIGH`) spänningsnivå jämfört med jord.
+- **G** står för *ground* (jord). Det är strömmens väg tillbaka till ESP8266.
+
+### Lysdioden
+
+En lysdiod leder bara ström åt **ett** håll. Därför spelar det roll hur du vänder den.
+
+| Ben         | Namn  | Pol | Kopplas mot     |
+|-------------|-------|-----|-----------------|
+| Långa benet | Anod  | +   | resistorn (D5)  |
+| Korta benet | Katod | −   | G (jord)        |
+
+> Tips: Kanten på lysdioden är ofta **platt** på samma sida som det korta benet (−).
+
+### Resistorn
+
+En lysdiod släpper igenom nästan hur mycket ström som helst när den väl lyser. Utan resistor kan det gå så mycket ström att lysdioden eller ESP8266-stiftet går sönder. Resistorn **begränsar strömmen**. Det spelar ingen roll åt vilket håll du vänder resistorn.
+
+### Experimentplattan
+
+Hålen på experimentplattan har **elektrisk kontakt med varandra i grupper om fem hål**. En sådan grupp kallas här för en **rad**. Det betyder:
+
+- En kabel och ett komponentben som sitter i **samma rad** är ihopkopplade.
+- Ett komponentben som sitter i en **annan rad** är **inte** ihopkopplat.
+- Grupperna på var sin sida om mittspåret är **inte** ihopkopplade med varandra.
+
+Se videon [Hur fungerar en breadboard?](https://www.youtube.com/watch?v=W6mixXsn-Vc) om du vill veta mer.
 
 ---
 
-## Steg 1 – Koppla in trafikljuset
+## Steg 2 – Koppla ESP8266 → breadboard → resistor → diod
 
-### Vad betyder märkningen?
-
-Trafikljuset är märkt med **G, Y, R** och **GND**:
-
-| Märkning | Engelska | Svenska |
-|----------|----------|---------|
-| G        | Green    | Grön    |
-| Y        | Yellow   | Gul     |
-| R        | Red      | Röd     |
-| GND      | Ground   | Jord    |
-
-Bredvid ESP8266 finns det många metallstift som sticker upp. Vi ska använda stiften **7**, **6**, **5** och **G**.
-
-**D** står för *digital*, det vill säga att stiftet antingen har **låg** (`LOW`) eller **hög** (`HIGH`) spänningsnivå jämfört med jord (ground). Därför heter stiften `D5`, `D6` och `D7` i koden.
-
-### Kopplingsschema
-
-Koppla in trafikljuset på experimentplattan **i serie med en resistor** för varje färg:
-
-| Trafikljus | Via             | ESP8266-stift |
-|------------|-----------------|---------------|
-| G (grön)   | resistor        | **D7**        |
-| Y (gul)    | resistor        | **D6**        |
-| R (röd)    | resistor        | **D5**        |
-| GND        | direkt (ingen resistor) | **G** (ground) |
+Strömmen ska gå i en slinga: ut från **D5**, genom **resistorn**, genom **lysdioden** och tillbaka till **G**.
 
 ```
-ESP8266                 Experimentplatta              Trafikljus
-                                                      
-  D7 ──────────────────┤ resistor ├────────────────── G
-  D6 ──────────────────┤ resistor ├────────────────── Y
-  D5 ──────────────────┤ resistor ├────────────────── R
-  G  ─────────────────────────────────────────────── GND
+ ESP8266                       Experimentplatta
+ 
+   D5 ───kabel───▶ rad 1 ──[ resistor ]── rad 4 ──▶|── rad 6
+                                          (+ långa ben)  (− korta ben)
+                                                          │
+   G  ◀──kabel────────────────────────────────────────────┘
 ```
 
-### Tänk på experimentplattan
+Gör så här, steg för steg:
 
-Hålen på experimentplattan har **elektrisk kontakt med varandra i grupper om fem hål**. Det betyder:
+1. **Kabel från D5:** Koppla en kabel från stift **5** på ESP8266 till ett hål i **rad 1** på experimentplattan.
+2. **Resistorn:** Sätt resistorns ena ben i **rad 1** (samma rad som kabeln) och det andra benet i **rad 4**.
+3. **Lysdioden:** Sätt lysdiodens **långa ben (+)** i **rad 4** (samma rad som resistorn) och det **korta benet (−)** i **rad 6**.
+4. **Kabel till G:** Koppla en kabel från **rad 6** (samma rad som det korta benet) tillbaka till stift **G** på ESP8266.
 
-- En kabel och ett resistorben som sitter i **samma femhålsgrupp** är ihopkopplade.
-- Resistorns två ben måste sitta i **olika** grupper – annars kortsluts den och gör ingen nytta.
-- Varje färg ska ha **sina egna** grupper så att de inte kopplas ihop med varandra.
+| Från                  | Till                  | Rad på breadboard |
+|-----------------------|-----------------------|-------------------|
+| ESP8266 stift 5 (D5)  | resistorns ena ben    | rad 1             |
+| resistorns andra ben  | lysdiodens långa ben  | rad 4             |
+| lysdiodens korta ben  | ESP8266 stift G (GND) | rad 6             |
 
-### Varför behövs resistorerna?
+Radnumren är bara exempel. Det viktiga är att varje koppling delar rad med nästa komponent, och att en komponents två ben **aldrig** sitter i samma rad.
 
-En lysdiod släpper igenom nästan hur mycket ström som helst när den väl lyser. Utan resistor kan det gå så mycket ström att lysdioden eller ESP8266-stiftet går sönder. Resistorn **begränsar strömmen**.
-
-> **Kontrollera kopplingen innan du kopplar in USB-kabeln!** Följ varje kabel med fingret från ESP8266 till trafikljuset.
+> **Kontrollera kopplingen innan du kopplar in USB-kabeln!** Följ strömmens väg med fingret: D5 → resistor → långa benet → korta benet → G.
 
 ---
 
-## Steg 2 – Ladda upp koden
+## Steg 3 – Ladda upp koden
 
 1. Koppla ESP8266 till datorn med USB-kabeln.
 2. Öppna Arduino-mjukvaran och skapa en ny skiss.
@@ -96,73 +104,55 @@ En lysdiod släpper igenom nästan hur mycket ström som helst när den väl lys
 5. Ladda upp koden genom att trycka på **högerpilen** (Upload) uppe till vänster i Arduino-mjukvaran.
 
 ```cpp
-const byte redLight = D5;
-const byte amberLight = D6;
-const byte greenLight = D7;
+const byte ledPin = D5;
 
 void setup() {
-  pinMode(redLight, OUTPUT);
-  pinMode(amberLight, OUTPUT);
-  pinMode(greenLight, OUTPUT);
-
-  digitalWrite(redLight, LOW);
-  digitalWrite(amberLight, LOW);
-  digitalWrite(greenLight, LOW);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
 }
 
 void loop() {
-  digitalWrite(redLight, HIGH);
-  delay(3000);
-
-  digitalWrite(amberLight, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
 
-  digitalWrite(redLight, LOW);
-  digitalWrite(amberLight, LOW);
-  digitalWrite(greenLight, HIGH);
-  delay(5000);
-
-  digitalWrite(greenLight, LOW);
-  digitalWrite(amberLight, HIGH);
-  delay(2000);
-
-  digitalWrite(amberLight, LOW);
+  digitalWrite(ledPin, LOW);
+  delay(1000);
 }
 ```
 
-När uppladdningen är klar ska trafikljuset börja växla färg.
+När uppladdningen är klar ska lysdioden lysa i en sekund, vara släckt i en sekund och sedan börja om.
 
 ---
 
 ## Så fungerar koden
 
-### Konstanterna
+### Konstanten
 
 ```cpp
-const byte redLight = D5;
+const byte ledPin = D5;
 ```
 
-Vi ger stiften namn så att koden blir lättare att läsa. `amber` betyder bärnstensfärgad – det är det engelska ordet för den gula färgen i ett trafikljus.
+Vi ger stiftet ett namn så att koden blir lättare att läsa. Om du flyttar kabeln till ett annat stift behöver du bara ändra på den här raden.
 
 ### setup()
 
 Körs **en gång** när ESP8266 startar:
 
-- `pinMode(..., OUTPUT)` talar om att stiftet ska **skicka ut** spänning (inte läsa in).
-- `digitalWrite(..., LOW)` ser till att alla lampor är släckta från början.
+- `pinMode(ledPin, OUTPUT)` talar om att stiftet ska **skicka ut** spänning (inte läsa in).
+- `digitalWrite(ledPin, LOW)` ser till att lysdioden är släckt från början.
 
 ### loop()
 
-Körs **om och om igen**. `digitalWrite(..., HIGH)` tänder en lampa, `LOW` släcker den och `delay(3000)` väntar i 3000 millisekunder (= 3 sekunder).
+Körs **om och om igen**:
 
-| Fas | Röd | Gul | Grön | Tid   | Betydelse         |
-|-----|:---:|:---:|:----:|-------|-------------------|
-| 1   | ●   |     |      | 3 s   | Stopp             |
-| 2   | ●   | ●   |      | 1 s   | Gör dig redo      |
-| 3   |     |     | ●    | 5 s   | Kör               |
-| 4   |     | ●   |      | 2 s   | Stanna om du kan  |
+| Rad                           | Vad händer?                                    |
+|-------------------------------|------------------------------------------------|
+| `digitalWrite(ledPin, HIGH);` | D5 får hög spänning – lysdioden **tänds**.     |
+| `delay(1000);`                | Programmet väntar 1000 ms (= 1 sekund).        |
+| `digitalWrite(ledPin, LOW);`  | D5 får låg spänning – lysdioden **släcks**.    |
+| `delay(1000);`                | Programmet väntar 1 sekund till.               |
 
-Sedan börjar `loop()` om från fas 1.
+Sedan börjar `loop()` om från början.
 
 ---
 
@@ -170,15 +160,17 @@ Sedan börjar `loop()` om från fas 1.
 
 | Problem | Möjlig orsak |
 |---------|--------------|
-| Ingen lampa lyser | GND inte kopplad till G, eller koden laddades inte upp. |
-| En lampa lyser aldrig | Kabeln sitter i fel stift, eller resistorns ben sitter i samma femhålsgrupp. |
-| Fel färg lyser vid fel tid | G/Y/R har kopplats till fel stift – jämför med kopplingstabellen. |
+| Lysdioden lyser aldrig | Lysdioden sitter åt fel håll – vänd på den så att långa benet sitter mot resistorn. |
+| Lysdioden lyser aldrig | Kabeln till G saknas, eller två ben som ska höra ihop sitter i olika rader. |
+| Lysdioden lyser aldrig | Resistorns båda ben sitter i samma rad, eller kabeln sitter i fel stift (inte 5). |
+| Lysdioden lyser hela tiden | Kabeln sitter i 3V3 i stället för 5, eller koden laddades inte upp. |
 | Uppladdningen misslyckas | Fel kort eller port vald under **Tools**, eller USB-kabeln klarar bara laddning (inte data). |
 
 ---
 
 ## Extrauppgifter
 
-1. **Ändra tiderna** – låt det vara grönt i 10 sekunder och rött i 8 sekunder.
-2. **Blinkande gult** – skriv ett program där bara den gula lampan blinkar en gång per sekund, som ett trafikljus nattetid.
-3. **Egen funktion** – skapa en funktion `void visaLjus(bool rod, bool gul, bool gron, int tid)` som tänder rätt lampor och väntar. Skriv om `loop()` så att den bara består av fyra anrop till din funktion.
+1. **Ändra takten** – låt lysdioden lysa i 2 sekunder och vara släckt i 0,5 sekunder.
+2. **Blinka snabbt** – hur kort kan `delay()` vara innan du inte längre ser att lysdioden blinkar?
+3. **SOS** – låt lysdioden blinka SOS i morsekod: tre korta, tre långa, tre korta.
+4. **Byt stift** – flytta kabeln från stift 5 till stift 6. Vad måste du ändra i koden?
