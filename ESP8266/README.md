@@ -64,6 +64,40 @@ pinMode(2, INPUT);          // Sätter pin 2 som ingång
 pinMode(3, INPUT_PULLUP);   // Ingång med intern pull-up resistor
 ```
 
+#### När ska jag använda OUTPUT och när INPUT?
+
+Fråga dig själv: **Vem bestämmer spänningen på pinnen – ESP8266 eller komponenten?**
+
+| Läge | ESP8266... | Använd när du vill... | Exempel på komponenter | Funktion i koden |
+|------|------------|------------------------|------------------------|------------------|
+| `OUTPUT` (utgång) | **skickar ut** spänning (HIGH/LOW) | **styra** något | LED, summer, relä, motordrivare | `digitalWrite()` |
+| `INPUT` (ingång) | **läser av** spänning (HIGH/LOW) | **känna av** något | knapp, brytare, rörelsesensor (PIR) | `digitalRead()` |
+| `INPUT_PULLUP` | läser av, med inbyggd pull-up-resistor | läsa en knapp utan extra resistor | knapp kopplad mellan pinne och GND | `digitalRead()` |
+
+**Tumregel:**
+- Ska ESP8266 **göra** något med världen (tända, låta, starta)? → `OUTPUT`
+- Ska ESP8266 **ta reda på** något om världen (är knappen tryckt?)? → `INPUT` eller `INPUT_PULLUP`
+
+```cpp
+const int ledPin = D5;     // LED – ESP8266 styr den
+const int knappPin = D2;   // Knapp – ESP8266 läser av den
+
+void setup() {
+  pinMode(ledPin, OUTPUT);         // vi vill TÄNDA/SLÄCKA lysdioden
+  pinMode(knappPin, INPUT_PULLUP); // vi vill LÄSA om knappen är tryckt
+}
+
+void loop() {
+  if (digitalRead(knappPin) == LOW) {  // LOW = tryckt (pga pull-up)
+    digitalWrite(ledPin, HIGH);        // tänd
+  } else {
+    digitalWrite(ledPin, LOW);         // släck
+  }
+}
+```
+
+> **Vanligt misstag:** Glömmer du `pinMode(ledPin, OUTPUT)` kan lysdioden lysa väldigt svagt eller inte alls, eftersom pinnen då inte driver ut ström ordentligt. Glömmer du `pinMode` för en knapp kan `digitalRead()` ge slumpmässiga värden.
+
 ### 2. digitalWrite(pin, value)
 Används för att sätta en digital utgång till HIGH (1) eller LOW (0).
 
