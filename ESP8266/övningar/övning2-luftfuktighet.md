@@ -270,11 +270,3 @@ Temperatur: 22.40 °C		Luftfuktighet: 41.90 %
 | `No such file or directory` när du laddar upp | Biblioteket är inte installerat – se *Installera biblioteket*. |
 | Sensorn blir varm | Ström och jord har bytt plats. Dra ur USB-kabeln direkt! |
 
----
-
-## Extrauppgifter
-
-1. **Fahrenheit** – räkna om temperaturen till Fahrenheit (`°F = °C × 1,8 + 32`) och skriv ut båda.
-2. **Varning** – tänd lysdioden från [Övning 1](README.md) när luftfuktigheten är över 60 %.
-3. **Högsta och lägsta** – spara det högsta och lägsta värdet som har uppmätts och skriv ut dem varje gång.
-4. **Medelvärde** – gör 5 mätningar och skriv ut medelvärdet i stället för varje enskild mätning.
