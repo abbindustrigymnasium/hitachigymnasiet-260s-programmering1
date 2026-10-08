@@ -174,3 +174,7 @@ Sedan börjar `loop()` om från början.
 2. **Blinka snabbt** – hur kort kan `delay()` vara innan du inte längre ser att lysdioden blinkar?
 3. **SOS** – låt lysdioden blinka SOS i morsekod: tre korta, tre långa, tre korta.
 4. **Byt stift** – flytta kabeln från stift 5 till stift 6. Vad måste du ändra i koden?
+
+---
+
+**Nästa övning:** [Övning 2 – Mät luftfuktighet och temperatur](övning2-luftfuktighet.md)
