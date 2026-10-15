@@ -356,7 +356,130 @@ Skapa en enkel interaktiv applikation med knappar som ändrar webbsidans utseend
 
 ---
 
-## Övning 7 - Formulärhantering
+## Övning 7 - Hämta värden från input-fält
+
+**Mål:** Lära dig läsa av vad användaren har skrivit eller valt i olika typer av formulärfält.
+
+**Förväntat resultat:** Du kommer att förstå att olika fält läses av på olika sätt, t.ex. `.value` för textfält och `.checked` för kryssrutor.
+
+### Del A: Läs av alla fält vid klick
+
+**Uppgift:**
+När användaren klickar på knappen "Visa värden" ska värdet från varje fält hämtas och skrivas ut, både med `console.log()` och i `<div id="output">`.
+
+**Steg:**
+
+1. Koppla en funktion till knappen med `addEventListener('click', ...)`
+2. Hämta värdet från varje fält i funktionen:
+   - **Textfält, e-post, textarea, datum och färg** → `.value`
+   - **Nummerfält** → `.value` ger en **sträng**. Gör om den till ett tal med `Number()` innan du räknar med den
+   - **Rullgardinsmeny (`<select>`)** → `.value` ger det valda alternativets `value`
+   - **Kryssruta (checkbox)** → `.checked` ger `true` eller `false`
+   - **Radioknappar** → hitta den som är vald med `querySelector('input[name="niva"]:checked')` och läs sedan dess `.value`
+   - **Reglage (range)** → `.value`
+3. Bygg en text med alla värden och lägg den i `output` med `textContent` (eller `innerHTML` om du vill ha radbrytningar med `<br>`)
+
+**Vad ska hända:** Om du fyller i "Anna", 17 år, väljer "Göteborg", kryssar i nyhetsbrevet och väljer "Medel" ska något i stil med detta visas:
+
+```
+Namn: Anna
+Ålder: 17 (nästa år blir du 18)
+Stad: goteborg
+Nyhetsbrev: true
+Nivå: medel
+...
+```
+
+### Del B: Uppdatera direkt när värdet ändras
+
+**Uppgift:**
+Visa reglagets värde i `<span id="volymVarde">` **medan** användaren drar i det, utan att klicka på någon knapp.
+
+**Steg:**
+
+1. Hämta reglaget och span-elementet
+2. Använd `addEventListener('input', ...)` på reglaget
+3. Sätt `span.textContent` till reglagets `.value` varje gång eventet körs
+
+**HTML-kod:**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      label {
+        display: block;
+        margin: 8px 0;
+      }
+      #output {
+        margin-top: 20px;
+        padding: 10px;
+        background: #f0f0f0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hämta värden</h1>
+
+    <label>Namn: <input type="text" id="namn" /></label>
+    <label>E-post: <input type="email" id="epost" /></label>
+    <label>Ålder: <input type="number" id="alder" min="0" max="120" /></label>
+    <label>Födelsedag: <input type="date" id="fodelsedag" /></label>
+    <label>Favoritfärg: <input type="color" id="farg" value="#3366ff" /></label>
+
+    <label>
+      Stad:
+      <select id="stad">
+        <option value="">-- Välj stad --</option>
+        <option value="stockholm">Stockholm</option>
+        <option value="goteborg">Göteborg</option>
+        <option value="malmo">Malmö</option>
+      </select>
+    </label>
+
+    <label><input type="checkbox" id="nyhetsbrev" /> Jag vill ha nyhetsbrevet</label>
+
+    <p>Programmeringsnivå:</p>
+    <label><input type="radio" name="niva" value="nyborjare" /> Nybörjare</label>
+    <label><input type="radio" name="niva" value="medel" /> Medel</label>
+    <label><input type="radio" name="niva" value="avancerad" /> Avancerad</label>
+
+    <label>
+      Volym: <input type="range" id="volym" min="0" max="100" value="50" />
+      <span id="volymVarde">50</span>
+    </label>
+
+    <label>Meddelande:<br /><textarea id="meddelande" rows="3"></textarea></label>
+
+    <button id="visaBtn">Visa värden</button>
+
+    <div id="output"></div>
+
+    <script>
+      // Din kod här
+    </script>
+  </body>
+</html>
+```
+
+**Tips:**
+
+- Hämta värdet **inuti** klick-funktionen. Om du läser `.value` utanför funktionen hämtas värdet när sidan laddas, och då är fälten tomma.
+- `"17" + 1` blir `"171"`, men `Number("17") + 1` blir `18`.
+- Om ingen radioknapp är vald returnerar `querySelector(...:checked)` `null`. Kontrollera det innan du läser `.value`, annars får du ett fel.
+- Ett tomt fält ger en tom sträng `""`, inte `null`.
+
+**Bonus:**
+
+- Visa texten "Inget valt" om användaren inte har valt stad eller nivå
+- Sätt bakgrundsfärgen på `output` till den valda favoritfärgen
+- Räkna ut hur många tecken meddelandet innehåller och visa det under textrutan medan användaren skriver
+
+---
+
+## Övning 8 - Formulärhantering
 
 **Mål:** Lära dig validera och hantera formulärdata med JavaScript.
 
@@ -447,7 +570,7 @@ Skapa ett registreringsformulär med validering och dynamisk feedback.
 
 ---
 
-## Övning 8 - Dynamisk Innehåll
+## Övning 9 - Dynamisk Innehåll
 
 **Mål:** Lära dig skapa, modifiera och ta bort DOM-element dynamiskt.
 
@@ -544,5 +667,6 @@ Skapa en "To-Do Lista" där användare kan lägga till, markera som klar och ta 
 **DOM-selektorer** - Hitta element med olika metoder  
 **Element-manipulation** - Ändra innehåll, stilar och attribut  
 **Event handling** - Reagera på användarinteraktioner  
+**Hämta värden** - Läsa av text, tal, val och kryssrutor från formulärfält  
 **Formulärvalidering** - Validera användarinput  
 **Dynamiskt innehåll** - Skapa interaktiva användargränssnitt
