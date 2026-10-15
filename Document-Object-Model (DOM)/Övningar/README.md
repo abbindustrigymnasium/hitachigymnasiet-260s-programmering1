@@ -241,7 +241,57 @@ En länk är extern om dess `href`-attribut innehåller `://`
 
 ---
 
-## Övning 5 - Event Handling (Klick-events)
+## Övning 5 - Tre sätt att koppla en knapp till en funktion
+
+**Mål:** Lära dig de tre olika sätten att koppla ett klick-event till en funktion.
+
+**Förväntat resultat:** Du kommer att förstå skillnaden mellan `onclick` i HTML, `onclick` i JavaScript och `addEventListener()`.
+
+**Uppgift:**
+Skapa 3 knappar och 3 funktioner. Varje funktion ska skriva ut ett eget meddelande till konsolen med `console.log()`. Varje knapp ska kopplas till sin funktion på ett **eget sätt**.
+
+**Steg:**
+
+1. **Knapp 1 – `onclick` direkt i HTML:**
+   Skriv attributet `onclick="knapp1()"` direkt på `<button>`-elementet.
+2. **Knapp 2 – Tilldela en funktion från JavaScript:**
+   Hämta knappen med `querySelector()` och tilldela funktionen till dess `onclick`-egenskap: `knapp.onclick = knapp2;`
+3. **Knapp 3 – `addEventListener()`:**
+   Hämta knappen med `querySelector()` och koppla funktionen med `knapp.addEventListener('click', knapp3);`
+
+**Vad ska hända:** När du klickar på respektive knapp ska rätt meddelande skrivas ut i konsolen, t.ex. "Knapp 1 klickad (onclick i HTML)".
+
+**HTML-kod:**
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Tre sätt att koppla events</h1>
+
+    <button id="btn1">Knapp 1</button>
+    <button id="btn2">Knapp 2</button>
+    <button id="btn3">Knapp 3</button>
+
+    <script>
+      // Din kod här
+    </script>
+  </body>
+</html>
+```
+
+**Tips:**
+
+- Vid sätt 2 och 3 skriver du funktionens namn **utan** parenteser (`knapp2`, inte `knapp2()`). Med parenteser körs funktionen direkt istället för vid klick.
+- Om du tilldelar `onclick` en gång till skrivs den första funktionen över. Med `addEventListener()` kan du koppla flera funktioner till samma knapp.
+- `addEventListener()` är det rekommenderade sättet, eftersom det håller isär HTML och JavaScript.
+
+**Bonus:**
+Koppla en andra funktion till knapp 3 med `addEventListener()` och se att båda körs. Försök sedan göra samma sak med `onclick` på knapp 2 – vad händer?
+
+---
+
+## Övning 6 - Event Handling (Klick-events)
 
 **Mål:** Lära dig hur JavaScript reagerar på användarinteraktioner.
 
@@ -306,7 +356,7 @@ Skapa en enkel interaktiv applikation med knappar som ändrar webbsidans utseend
 
 ---
 
-## Övning 6 - Formulärhantering
+## Övning 7 - Formulärhantering
 
 **Mål:** Lära dig validera och hantera formulärdata med JavaScript.
 
@@ -397,7 +447,7 @@ Skapa ett registreringsformulär med validering och dynamisk feedback.
 
 ---
 
-## Övning 7 - Dynamisk Innehåll
+## Övning 8 - Dynamisk Innehåll
 
 **Mål:** Lära dig skapa, modifiera och ta bort DOM-element dynamiskt.
 
